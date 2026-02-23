@@ -1,9 +1,7 @@
 
-  # Untitled
+  # Prototipo Mi hogar
 
-  This is a code bundle for a prototype.
-
-  ## Running the code
+  ## Para Ejecutar
 
   Run `npm i` to install the dependencies.
 
