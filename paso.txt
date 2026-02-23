@@ -1,0 +1,4 @@
+Paso 1 de 40
+
+Fase de Inicialización.
+En esta etapa temprana se establece la arquitectura base del proyecto React. Se configuran las dependencias principales, la estructura de carpetas, y se crea el esqueleto inicial del componente App.tsx que servirá como contenedor principal sin componentes visuales avanzados aún.\n
