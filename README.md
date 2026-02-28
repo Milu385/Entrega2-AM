@@ -1,9 +1,12 @@
 
-  # Prototipo Mi hogar
+Prototipo Mi hogar
 
-  ## Para Ejecutar
+Para Ejecutar
 
-  Run `npm i` to install the dependencies.
+- ejecutar `npm i` para instalar las dependencias.
 
-  Run `npm run dev` to start the development server.
+- ejecutar `npm run dev` para iniciar el proyecto.
   
+Daniel Cardona Gonzalez
+Santiago Posso Acevedo 
+Santiago Maya Horta
