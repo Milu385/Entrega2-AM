@@ -1,7 +1,7 @@
-// Proceso Automático - Construcción del Prototipo - Iteración 9
+// Proceso Automático - Construcción del Prototipo - Iteración 10
 import { useState } from "react";
 import { BottomNav } from "./components/BottomNav";
-
+import { PropertyCard } from "./components/PropertyCard";
 
 
 export default function App() {
@@ -30,6 +30,13 @@ export default function App() {
         
 
         
+        {
+            activeTab === 'search' && (
+                <div className="mt-4">
+                    <PropertyCard property={MOCK_PROPERTY} onToggleFavorite={() => { }} onClick={() => { }} />
+                </div>
+            )
+        }
         
       </div>
       
