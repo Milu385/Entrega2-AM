@@ -1,8 +1,8 @@
-// Proceso Automático - Construcción del Prototipo - Iteración 14
+// Proceso Automático - Construcción del Prototipo - Iteración 15
 import { useState } from "react";
 import { BottomNav } from "./components/BottomNav";
 import { PropertyCard } from "./components/PropertyCard";
-
+import { SearchBar } from "./components/SearchBar";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("home");
@@ -28,6 +28,13 @@ export default function App() {
         <h1 className="text-2xl font-bold mb-4">Prototipo Inmobiliario</h1>
         
         
+        {
+            activeTab === 'search' && (
+                <div className="mb-4">
+                    <SearchBar searchQuery="" onSearchChange={() => { }} onOpenFilters={() => { }} />
+                </div>
+            )
+        }
 
         
         {
