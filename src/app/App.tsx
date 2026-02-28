@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { BottomNav } from "./components/BottomNav";
 
 
 
@@ -32,6 +32,8 @@ export default function App() {
         
       </div>
       
+      
+      <BottomNav activeTab={activeTab as any} onTabChange={(t : any) => setActiveTab(t)} />
       
     </div>
   );
