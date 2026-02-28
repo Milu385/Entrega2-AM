@@ -1,12 +1,11 @@
 
-Prototipo Mi hogar
+  # Untitled
 
-Para Ejecutar
+  This is a code bundle for a prototype.
 
-- ejecutar `npm i` para instalar las dependencias.
+  ## Running the code
 
-- ejecutar `npm run dev` para iniciar el proyecto.
+  Run `npm i` to install the dependencies.
+
+  Run `npm run dev` to start the development server.
   
-Daniel Cardona Gonzalez
-Santiago Posso Acevedo 
-Santiago Maya Horta
