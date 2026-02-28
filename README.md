@@ -1,11 +1,8 @@
+Mi Hogar - Aplicativo hibrido
 
-  # Untitled
+#para ejecutar el prototipo
 
-  This is a code bundle for a prototype.
+  Ejecuta `npm i` para instalar dependecias.
 
-  ## Running the code
-
-  Run `npm i` to install the dependencies.
-
-  Run `npm run dev` to start the development server.
+  Ejecuta `npm run dev` para iniciar el prototipo.
   
