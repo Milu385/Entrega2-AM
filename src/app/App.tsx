@@ -1,4 +1,4 @@
-// Proceso Automático - Construcción del Prototipo - Iteración 8
+// Proceso Automático - Construcción del Prototipo - Iteración 9
 import { useState } from "react";
 import { BottomNav } from "./components/BottomNav";
 
