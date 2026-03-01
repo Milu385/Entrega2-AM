@@ -1,4 +1,4 @@
-// Proceso Automático - Construcción del Prototipo - Iteración 36
+// Proceso Automático - Construcción del Prototipo - Iteración 39
 import { useState } from "react";
 import { BottomNav } from "./components/BottomNav";
 import { PropertyCard } from "./components/PropertyCard";
