@@ -10,14 +10,53 @@ import { SwipeView } from "./components/SwipeView";
 import { Bell, MapPin, Heart } from "lucide-react";
 import { Toast, ToastType } from "./components/Toast";
 import { Notification, NotificationList } from "./components/NotificationList";
+import photo1559329146807aff9ff1fb from "../assets/properties/photo-1559329146-807aff9ff1fb.jpg";
+import photo161017753464434d881503b83 from "../assets/properties/photo-1610177534644-34d881503b83.jpg";
+import photo163888593012585350348d266 from "../assets/properties/photo-1638885930125-85350348d266.jpg";
+import photo1704428382583c9c7c1e55d94 from "../assets/properties/photo-1704428382583-c9c7c1e55d94.jpg";
+import photo17068088498277366c098b317 from "../assets/properties/photo-1706808849827-7366c098b317.jpg";
+import photo1762397794646f19044bd0828 from "../assets/properties/photo-1762397794646-f19044bd0828.jpg";
 
 type Tab = "home" | "search" | "favorites" | "profile";
 
-const MOCK_PROPERTIES: (Property & {
+type PropertyWithDetails = Property & {
   description: string;
   images: string[];
   agent: { name: string; phone: string; email: string };
-})[] = [
+};
+
+const OFFLINE_IMAGE_BY_ID: Record<string, string> = {
+  "1559329146-807aff9ff1fb": photo1559329146807aff9ff1fb,
+  "1610177534644-34d881503b83": photo161017753464434d881503b83,
+  "1638885930125-85350348d266": photo163888593012585350348d266,
+  "1704428382583-c9c7c1e55d94": photo1704428382583c9c7c1e55d94,
+  "1706808849827-7366c098b317": photo17068088498277366c098b317,
+  "1762397794646-f19044bd0828": photo1762397794646f19044bd0828,
+};
+
+const getUnsplashPhotoId = (image: string): string | null => {
+  const match = image.match(/photo-([^?]+)/i);
+  return match?.[1] ?? null;
+};
+
+const toOfflineImage = (image: string): string => {
+  const photoId = getUnsplashPhotoId(image);
+  if (!photoId) {
+    return image;
+  }
+
+  return OFFLINE_IMAGE_BY_ID[photoId] ?? image;
+};
+
+const normalizePropertiesForOffline = (properties: PropertyWithDetails[]): PropertyWithDetails[] => {
+  return properties.map((property) => ({
+    ...property,
+    image: toOfflineImage(property.image),
+    images: property.images.map((image) => toOfflineImage(image)),
+  }));
+};
+
+const MOCK_PROPERTIES: PropertyWithDetails[] = [
     {
       id: "1",
       title: "Apartamento Moderno en el Centro",
@@ -158,6 +197,10 @@ const MOCK_PROPERTIES: (Property & {
     },
   ];
 
+const OFFLINE_MOCK_BY_ID = new Map(
+  normalizePropertiesForOffline(MOCK_PROPERTIES).map((property) => [property.id, property] as const)
+);
+
 export default function App() {
   /* 
    * Initialize state from localStorage if available, otherwise use defaults.
@@ -173,9 +216,23 @@ export default function App() {
     return (saved as Tab) || "home";
   });
 
-  const [properties, setProperties] = useState(() => {
+  const [properties, setProperties] = useState<PropertyWithDetails[]>(() => {
     const saved = localStorage.getItem("properties");
-    return saved ? JSON.parse(saved) : MOCK_PROPERTIES;
+    const parsed: PropertyWithDetails[] = saved ? JSON.parse(saved) : MOCK_PROPERTIES;
+    const normalized = normalizePropertiesForOffline(parsed);
+
+    return normalized.map((property) => {
+      const canonical = OFFLINE_MOCK_BY_ID.get(property.id);
+      if (!canonical) {
+        return property;
+      }
+
+      return {
+        ...property,
+        image: canonical.image,
+        images: [...canonical.images],
+      };
+    });
   });
 
   const [searchQuery, setSearchQuery] = useState(() => {
@@ -406,7 +463,7 @@ export default function App() {
           {/* Contenido Principal */}
           {activeTab === "home" && (
             <SwipeView
-              properties={MOCK_PROPERTIES}
+              properties={properties}
               onPropertyDetail={setSelectedProperty}
               onLike={handlePropertyLike}
               onDislike={handlePropertyDislike}
