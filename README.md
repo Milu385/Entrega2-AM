@@ -18,6 +18,10 @@ npm start	Inicia el servidor de desarrollo (CRA).
 npm run build	Compila la aplicación para producción en la carpeta dist o build.
 npm test	Lanza el corredor de pruebas.
 
+Link al Figma del Diseño
+
+https://www.figma.com/design/8SFHDMbnY9dHVy89MKZ2s1/mi-hogar?node-id=1-71&t=eK7czZw1YYtxn7ie-1
+
 Autores
 
 Daniel Cardona - Santiago Posso - Santiago Maya
