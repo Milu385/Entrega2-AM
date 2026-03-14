@@ -16,7 +16,7 @@ export function SearchBar({ onOpenFilters, searchQuery, onSearchChange }: Search
           placeholder="Buscar ubicación, precio..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full pl-11 pr-4 py-3 bg-gray-50 rounded-xl border-0 focus:outline-none focus:ring-2 focus:ring-blue-600"
+          className="w-full pl-11 pr-4 py-3 bg-gray-50 dark:bg-gray-800 dark:text-white rounded-xl border-0 focus:outline-none focus:ring-2 focus:ring-blue-600 placeholder-gray-400 dark:placeholder-gray-500 transition-colors"
         />
       </div>
       <button

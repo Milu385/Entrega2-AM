@@ -85,7 +85,7 @@ export function SwipeCard({ property, onLike, onDislike, onDetail, style }: Swip
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="relative w-full max-w-md h-[600px] bg-white rounded-3xl shadow-2xl overflow-hidden pointer-events-none select-none">
+      <div className="relative w-full max-w-md h-[600px] bg-white dark:bg-gray-900 rounded-3xl shadow-2xl overflow-hidden pointer-events-none select-none transition-colors">
         {/* Imagen principal */}
         <div className="relative h-full">
           <ImageWithFallback
@@ -120,9 +120,9 @@ export function SwipeCard({ property, onLike, onDislike, onDetail, style }: Swip
             }}
             onMouseDown={(e) => e.stopPropagation()}
             onTouchStart={(e) => e.stopPropagation()}
-            className="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg pointer-events-auto cursor-pointer hover:scale-110 transition-transform z-20"
+            className="absolute top-4 right-4 w-10 h-10 bg-white/90 dark:bg-gray-900/80 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg pointer-events-auto cursor-pointer hover:scale-110 transition-transform z-20"
           >
-            <Info className="w-5 h-5 text-gray-700" />
+            <Info className="w-5 h-5 text-gray-700 dark:text-gray-300" />
           </button>
 
           {/* Indicadores de swipe mejorados */}
