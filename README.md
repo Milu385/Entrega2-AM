@@ -1,4 +1,4 @@
- TuHogar - App Móvil Híbrida
+## TuHogar - App Móvil Híbrida
 
 TuHogar es una plataforma moderna diseñada para la gestión y servicios del hogar. Esta aplicación híbrida permite una experiencia fluida tanto en Android como en iOS, utilizando un único código base de React.
 
