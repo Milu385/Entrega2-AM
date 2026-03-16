@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">Mi Hogar</string>
-    <string name="title_activity_main">Mi Hogar</string>
-    <string name="package_name">com.mihogar.app</string>
-    <string name="custom_url_scheme">com.mihogar.app</string>
-</resources>
