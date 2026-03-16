@@ -6,10 +6,12 @@ import { SearchBar } from "./components/SearchBar";
 import { FilterSheet, Filters } from "./components/FilterSheet";
 import { SettingsSheet } from "./components/SettingsSheet";
 import { EditProfileSheet } from "./components/EditProfileSheet";
+import { AboutSheet } from "./components/AboutSheet";
+import { SupportSheet } from "./components/SupportSheet";
 import { PropertyDetail } from "./components/PropertyDetail";
 import { BottomNav } from "./components/BottomNav";
 import { SwipeView } from "./components/SwipeView";
-import { Bell, MapPin, Heart } from "lucide-react";
+import { Bell, MapPin, Heart, Info, Headphones } from "lucide-react";
 import { Toast, ToastType } from "./components/Toast";
 import { Notification, NotificationList } from "./components/NotificationList";
 import photo1559329146807aff9ff1fb from "../assets/properties/photo-1559329146-807aff9ff1fb.jpg";
@@ -28,37 +30,6 @@ type PropertyWithDetails = Property & {
   agent: { name: string; phone: string; email: string };
 };
 
-const OFFLINE_IMAGE_BY_ID: Record<string, string> = {
-  "1559329146-807aff9ff1fb": photo1559329146807aff9ff1fb,
-  "1610177534644-34d881503b83": photo161017753464434d881503b83,
-  "1638885930125-85350348d266": photo163888593012585350348d266,
-  "1704428382583-c9c7c1e55d94": photo1704428382583c9c7c1e55d94,
-  "1706808849827-7366c098b317": photo17068088498277366c098b317,
-  "1762397794646-f19044bd0828": photo1762397794646f19044bd0828,
-};
-
-const getUnsplashPhotoId = (image: string): string | null => {
-  const match = image.match(/photo-([^?]+)/i);
-  return match?.[1] ?? null;
-};
-
-const toOfflineImage = (image: string): string => {
-  const photoId = getUnsplashPhotoId(image);
-  if (!photoId) {
-    return image;
-  }
-
-  return OFFLINE_IMAGE_BY_ID[photoId] ?? image;
-};
-
-const normalizePropertiesForOffline = (properties: PropertyWithDetails[]): PropertyWithDetails[] => {
-  return properties.map((property) => ({
-    ...property,
-    image: toOfflineImage(property.image),
-    images: property.images.map((image) => toOfflineImage(image)),
-  }));
-};
-
 const MOCK_PROPERTIES: PropertyWithDetails[] = [
   {
     id: "1",
@@ -69,13 +40,13 @@ const MOCK_PROPERTIES: PropertyWithDetails[] = [
     bathrooms: 2,
     area: 85,
     type: "Venta",
-    image: "https://images.unsplash.com/photo-1559329146-807aff9ff1fb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBhcGFydG1lbnQlMjBleHRlcmlvcnxlbnwxfHx8fDE3NzA0NzU2MzF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
+    image: photo1559329146807aff9ff1fb,
     description: "Hermoso apartamento moderno completamente renovado con acabados de lujo. Ubicado en el corazón de El Poblado con acceso a todas las comodidades. Incluye cocina equipada, baños modernos y balcón con vista panorámica.",
     images: [
-      "https://images.unsplash.com/photo-1610177534644-34d881503b83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBraXRjaGVuJTIwaW50ZXJpb3J8ZW58MXx8fHwxNzcwNDkwNjI4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1638885930125-85350348d266?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBsaXZpbmclMjByb29tfGVufDF8fHx8MTc3MDQ2ODAwOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1704428382583-c9c7c1e55d94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBiZWRyb29tJTIwZGVzaWdufGVufDF8fHx8MTc3MDQ4ODQ4NHww&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1559329146-807aff9ff1fb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBhcGFydG1lbnQlMjBleHRlcmlvcnxlbnwxfHx8fDE3NzA0NzU2MzF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
+      photo161017753464434d881503b83,
+      photo163888593012585350348d266,
+      photo1704428382583c9c7c1e55d94,
+      photo1559329146807aff9ff1fb,
     ],
     agent: {
       name: "María González",
@@ -92,13 +63,13 @@ const MOCK_PROPERTIES: PropertyWithDetails[] = [
     bathrooms: 3,
     area: 180,
     type: "Venta",
-    image: "https://images.unsplash.com/photo-1706808849827-7366c098b317?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3VzZSUyMGZhY2FkZXxlbnwxfHx8fDE3NzA0NDM0ODV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
+    image: photo17068088498277366c098b317,
     description: "Espectacular casa unifamiliar en zona tranquila y segura de Envigado. Amplio jardín, garaje para 2 coches, y todas las comodidades para una familia. Cerca de colegios y centros comerciales.",
     images: [
-      "https://images.unsplash.com/photo-1638885930125-85350348d266?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBsaXZpbmclMjByb29tfGVufDF8fHx8MTc3MDQ2ODAwOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1610177534644-34d881503b83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBraXRjaGVuJTIwaW50ZXJpb3J8ZW58MXx8fHwxNzcwNDkwNjI4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1704428382583-c9c7c1e55d94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBiZWRyb29tJTIwZGVzaWdufGVufDF8fHx8MTc3MDQ4ODQ4NHww&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1706808849827-7366c098b317?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3VzZSUyMGZhY2FkZXxlbnwxfHx8fDE3NzA0NDM0ODV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
+      photo163888593012585350348d266,
+      photo161017753464434d881503b83,
+      photo1704428382583c9c7c1e55d94,
+      photo17068088498277366c098b317,
     ],
     agent: {
       name: "Carlos Rodríguez",
@@ -115,13 +86,13 @@ const MOCK_PROPERTIES: PropertyWithDetails[] = [
     bathrooms: 2,
     area: 120,
     type: "Alquiler",
-    image: "https://images.unsplash.com/photo-1762397794646-f19044bd0828?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBjb25kbyUyMGJ1aWxkaW5nfGVufDF8fHx8MTc3MDQ5NDM3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
+    image: photo1762397794646f19044bd0828,
     description: "Impresionante ático con amplia terraza y vistas espectaculares. Edificio moderno con piscina, gimnasio y seguridad 24h. Zona premium de la ciudad.",
     images: [
-      "https://images.unsplash.com/photo-1638885930125-85350348d266?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBsaXZpbmclMjByb29tfGVufDF8fHx8MTc3MDQ2ODAwOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1704428382583-c9c7c1e55d94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBiZWRyb29tJTIwZGVzaWdufGVufDF8fHx8MTc3MDQ4ODQ4NHww&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1610177534644-34d881503b83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBraXRjaGVuJTIwaW50ZXJpb3J8ZW58MXx8fHwxNzcwNDkwNjI4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1762397794646-f19044bd0828?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBjb25kbyUyMGJ1aWxkaW5nfGVufDF8fHx8MTc3MDQ5NDM3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
+      photo163888593012585350348d266,
+      photo1704428382583c9c7c1e55d94,
+      photo161017753464434d881503b83,
+      photo1762397794646f19044bd0828,
     ],
     agent: {
       name: "Ana López",
@@ -138,13 +109,13 @@ const MOCK_PROPERTIES: PropertyWithDetails[] = [
     bathrooms: 1,
     area: 45,
     type: "Alquiler",
-    image: "https://images.unsplash.com/photo-1559329146-807aff9ff1fb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBhcGFydG1lbnQlMjBleHRlcmlvcnxlbnwxfHx8fDE3NzA0NzU2MzF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
+    image: photo1559329146807aff9ff1fb,
     description: "Acogedor estudio completamente amueblado y equipado. Perfecto para profesionales o estudiantes. A pasos del metro y zonas de ocio.",
     images: [
-      "https://images.unsplash.com/photo-1704428382583-c9c7c1e55d94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBiZWRyb29tJTIwZGVzaWdufGVufDF8fHx8MTc3MDQ4ODQ4NHww&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1610177534644-34d881503b83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBraXRjaGVuJTIwaW50ZXJpb3J8ZW58MXx8fHwxNzcwNDkwNjI4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1638885930125-85350348d266?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBsaXZpbmclMjByb29tfGVufDF8fHx8MTc3MDQ2ODAwOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1559329146-807aff9ff1fb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBhcGFydG1lbnQlMjBleHRlcmlvcnxlbnwxfHx8fDE3NzA0NzU2MzF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
+      photo1704428382583c9c7c1e55d94,
+      photo161017753464434d881503b83,
+      photo163888593012585350348d266,
+      photo1559329146807aff9ff1fb,
     ],
     agent: {
       name: "Pedro Martínez",
@@ -161,13 +132,13 @@ const MOCK_PROPERTIES: PropertyWithDetails[] = [
     bathrooms: 4,
     area: 280,
     type: "Venta",
-    image: "https://images.unsplash.com/photo-1706808849827-7366c098b317?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3VzZSUyMGZhY2FkZXxlbnwxfHx8fDE3NzA0NDM0ODV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
+    image: photo17068088498277366c098b317,
     description: "Exclusiva finca independiente con amplias zonas comunes, jardín privado y piscina. Ideal para familias que buscan tranquilidad y espacio. Garaje para 3 vehículos.",
     images: [
-      "https://images.unsplash.com/photo-1638885930125-85350348d266?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBsaXZpbmclMjByb29tfGVufDF8fHx8MTc3MDQ2ODAwOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1610177534644-34d881503b83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBraXRjaGVuJTIwaW50ZXJpb3J8ZW58MXx8fHwxNzcwNDkwNjI4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1704428382583-c9c7c1e55d94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBiZWRyb29tJTIwZGVzaWdufGVufDF8fHx8MTc3MDQ4ODQ4NHww&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1706808849827-7366c098b317?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBob3VzZSUyMGZhY2FkZXxlbnwxfHx8fDE3NzA0NDM0ODV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
+      photo163888593012585350348d266,
+      photo161017753464434d881503b83,
+      photo1704428382583c9c7c1e55d94,
+      photo17068088498277366c098b317,
     ],
     agent: {
       name: "Laura Fernández",
@@ -184,13 +155,13 @@ const MOCK_PROPERTIES: PropertyWithDetails[] = [
     bathrooms: 1,
     area: 75,
     type: "Alquiler",
-    image: "https://images.unsplash.com/photo-1762397794646-f19044bd0828?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBjb25kbyUyMGJ1aWxkaW5nfGVufDF8fHx8MTc3MDQ5NDM3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
+    image: photo1762397794646f19044bd0828,
     description: "Luminoso apartamento con vistas directas al parque. Recién reformado, con pisos de madera y cocina americana. Edificio con ascensor.",
     images: [
-      "https://images.unsplash.com/photo-1638885930125-85350348d266?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBsaXZpbmclMjByb29tfGVufDF8fHx8MTc3MDQ2ODAwOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1704428382583-c9c7c1e55d94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBiZWRyb29tJTIwZGVzaWdufGVufDF8fHx8MTc3MDQ4ODQ4NHww&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1610177534644-34d881503b83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBraXRjaGVuJTIwaW50ZXJpb3J8ZW58MXx8fHwxNzcwNDkwNjI4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
-      "https://images.unsplash.com/photo-1762397794646-f19044bd0828?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBjb25kbyUyMGJ1aWxkaW5nfGVufDF8fHx8MTc3MDQ5NDM3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_medium=referral",
+      photo163888593012585350348d266,
+      photo1704428382583c9c7c1e55d94,
+      photo161017753464434d881503b83,
+      photo1762397794646f19044bd0828,
     ],
     agent: {
       name: "Roberto Sánchez",
@@ -199,10 +170,6 @@ const MOCK_PROPERTIES: PropertyWithDetails[] = [
     },
   },
 ];
-
-const OFFLINE_MOCK_BY_ID = new Map(
-  normalizePropertiesForOffline(MOCK_PROPERTIES).map((property) => [property.id, property] as const)
-);
 
 export default function App() {
   /* 
@@ -221,21 +188,7 @@ export default function App() {
 
   const [properties, setProperties] = useState<PropertyWithDetails[]>(() => {
     const saved = localStorage.getItem("properties");
-    const parsed: PropertyWithDetails[] = saved ? JSON.parse(saved) : MOCK_PROPERTIES;
-    const normalized = normalizePropertiesForOffline(parsed);
-
-    return normalized.map((property) => {
-      const canonical = OFFLINE_MOCK_BY_ID.get(property.id);
-      if (!canonical) {
-        return property;
-      }
-
-      return {
-        ...property,
-        image: canonical.image,
-        images: [...canonical.images],
-      };
-    });
+    return saved ? JSON.parse(saved) : MOCK_PROPERTIES;
   });
 
   const [searchQuery, setSearchQuery] = useState(() => {
@@ -330,6 +283,8 @@ export default function App() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [isSupportOpen, setIsSupportOpen] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<string | null>(null);
 
   const [customName, setCustomName] = useState(() => {
@@ -560,9 +515,27 @@ export default function App() {
           )}
 
           {activeTab === "profile" && (
-            <div className="px-6 pt-4 flex-1 overflow-y-auto">
+            <div className="px-6 pt-4 pb-20 flex-1 overflow-y-auto">
               {!user ? (
-                <Login onLogin={handleLogin} />
+                <div className="space-y-6">
+                  <Login onLogin={handleLogin} />
+                  <div className="px-6">
+                    <button 
+                      onClick={() => setIsAboutOpen(true)}
+                      className="w-full py-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-white rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 font-medium transition-colors flex items-center justify-center gap-2"
+                    >
+                      <Info className="w-5 h-5 text-blue-600" />
+                      Acerca de
+                    </button>
+                    <button 
+                      onClick={() => setIsSupportOpen(true)}
+                      className="w-full py-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-white rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 font-medium transition-colors flex items-center justify-center gap-2"
+                    >
+                      <Headphones className="w-5 h-5 text-blue-600" />
+                      Ayuda y Soporte
+                    </button>
+                  </div>
+                </div>
               ) : (
                 <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 text-center shadow-sm border border-gray-100 dark:border-gray-800 transition-colors">
                   <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -591,7 +564,16 @@ export default function App() {
                     >
                       Configuración
                     </button>
-                    <button className="w-full py-3 px-4 bg-gray-50 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700 rounded-xl text-left transition-colors">
+                    <button 
+                      onClick={() => setIsAboutOpen(true)}
+                      className="w-full py-3 px-4 bg-gray-50 dark:bg-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl text-left transition-colors"
+                    >
+                      Acerca de
+                    </button>
+                    <button 
+                      onClick={() => setIsSupportOpen(true)}
+                      className="w-full py-3 px-4 bg-gray-50 dark:bg-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl text-left transition-colors"
+                    >
                       Ayuda y Soporte
                     </button>
                     <button
@@ -631,6 +613,17 @@ export default function App() {
             onClose={() => setIsSettingsOpen(false)}
             isDarkMode={isDarkMode}
             onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
+          />
+
+          <AboutSheet
+            isOpen={isAboutOpen}
+            onClose={() => setIsAboutOpen(false)}
+          />
+
+          {/* Ayuda y Soporte */}
+          <SupportSheet
+            isOpen={isSupportOpen}
+            onClose={() => setIsSupportOpen(false)}
           />
 
           {/* Navegación Inferior */}
